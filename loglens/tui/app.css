@@ -26,9 +26,11 @@ Screen {
 #search-input, #severity-input {
     width: 1fr;
     margin-right: 1;
-    border: tall $accent;
+    border: none;
+    border-bottom: solid $accent;
     background: $surface;
     color: $text;
+    padding: 0 1;
 }
 
 Input {
@@ -36,9 +38,15 @@ Input {
     color: $text;
 }
 
-Input:focus {
-    border: tall $success;
+Input:focus, Input.-focused {
+    border: none;
+    border-bottom: solid $success;
     background: $surface-lighten-1;
+    color: $text;
+}
+
+/* Ensure typed text is always visible (Textual internal structure can vary slightly by version) */
+Input > .input--value {
     color: $text;
 }
 
@@ -49,6 +57,10 @@ Input > .input--placeholder {
 Input > .input--cursor {
     color: $text;
     background: $primary;
+}
+
+Input > .input--selection {
+    background: $primary-darken-1;
 }
 
 Button {

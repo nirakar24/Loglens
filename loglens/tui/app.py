@@ -38,7 +38,12 @@ class LogLensApp(App):
         self.source = source
         self.source_kwargs = kwargs
         self.app_state = AppState()
-        self.backend = BackendAdapter(max_buffer=10000)
+        # If a time range is provided, avoid a fixed cap so users can page through
+        # all logs within that time window.
+        if kwargs.get("since"):
+            self.backend = BackendAdapter(max_buffer=None)
+        else:
+            self.backend = BackendAdapter(max_buffer=10000)
     
     def on_mount(self) -> None:
         """Handle app mount - load initial data."""
@@ -50,11 +55,13 @@ class LogLensApp(App):
         try:
             self.app_state.error_message = None
             self.app_state.status_message = "Loading logs..."
+
+            initial_limit = None if self.source_kwargs.get("since") else 1000
             
             # Fetch from backend
             records = self.backend.fetch_records(
                 source=self.source,
-                limit=1000,  # Initial load limit
+                limit=initial_limit,
                 follow=self.app_state.follow_mode,
                 severity=self.app_state.filters.severity,
                 min_severity=self.app_state.filters.min_severity,

@@ -6,6 +6,7 @@ NO backend logic - pure data structures only.
 """
 
 from dataclasses import dataclass, field
+from datetime import datetime
 from typing import Optional, List
 from loglens.model import LogRecord
 
@@ -47,8 +48,25 @@ class AppState:
         
         # Severity filter (handled by filter_logs in backend)
         # Keyword filter (handled by filter_logs in backend)
-        
-        return filtered
+
+        # Always show newest first
+        return sorted(filtered, key=self._timestamp_sort_key, reverse=True)
+
+    def _timestamp_sort_key(self, record: LogRecord) -> tuple:
+        """Sort key for timestamps (handles missing/invalid values safely)."""
+        ts = record.timestamp
+        if not ts:
+            return (0.0, "")
+        if isinstance(ts, str):
+            try:
+                dt = datetime.fromisoformat(ts.replace("Z", "+00:00"))
+                return (dt.timestamp(), ts)
+            except Exception:
+                return (0.0, ts)
+        try:
+            return (float(ts), str(ts))
+        except Exception:
+            return (0.0, str(ts))
     
     def _get_category(self, record: LogRecord) -> str:
         """Extract category from LogRecord.raw."""

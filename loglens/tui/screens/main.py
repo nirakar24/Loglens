@@ -21,7 +21,7 @@ from datetime import datetime
 from textual.app import ComposeResult
 from textual.screen import Screen
 from textual.message import Message
-from textual.containers import Container, Horizontal, Vertical, VerticalScroll
+from textual.containers import Horizontal, Vertical, VerticalScroll
 from textual.widgets import (
     Header, Footer, DataTable, Static, Input, 
     Button, ListView, ListItem, Label
@@ -120,20 +120,31 @@ class StatsBar(Static):
         self.update(f"📊 Total Logs: {total} | {follow_indicator}")
 
 
-class FilterBar(Container):
+class FilterBar(Horizontal):
     """Filter controls bar."""
     
     def compose(self) -> ComposeResult:
-        with Horizontal(classes="filter-bar"):
-            yield Input(placeholder="🔍 Search keyword...", id="search-input")
-            yield Input(placeholder="⚠️  Min severity (e.g. WARNING)", id="severity-input")
-            yield Button("Reload", id="reload-btn", variant="primary")
-            yield Button("Follow", id="follow-btn")
-            yield Button("Toggle Raw", id="toggle-raw-btn")
+        yield Input(placeholder="🔍 Search keyword...", id="search-input")
+        yield Input(placeholder="⚠️  Min severity (e.g. WARNING)", id="severity-input")
+        yield Button("Reload", id="reload-btn", variant="primary")
+        yield Button("Follow", id="follow-btn")
+        yield Button("Toggle Raw", id="toggle-raw-btn")
 
 
 class MainScreen(Screen):
     """Main application screen with 3-pane layout."""
+    
+    # Severity color mapping (Rich markup)
+    SEVERITY_COLORS = {
+        "EMERG": "bright_magenta",
+        "ALERT": "bright_red",
+        "CRIT": "red",
+        "ERROR": "red",
+        "WARNING": "yellow",
+        "NOTICE": "cyan",
+        "INFO": "green",
+        "DEBUG": "dim white",
+    }
     
     BINDINGS = [
         Binding("ctrl+q", "quit", "Quit"),
@@ -157,7 +168,7 @@ class MainScreen(Screen):
         """Create child widgets."""
         yield Header()
         yield StatsBar(id="stats-bar", classes="stats-bar")
-        yield FilterBar()
+        yield FilterBar(classes="filter-bar")
         
         with Horizontal(id="main-container"):
             # Sidebar: 20% width
@@ -230,10 +241,14 @@ class MainScreen(Screen):
             else:
                 ts_display = str(ts)
             
+            # Apply color to severity label
+            color = self.SEVERITY_COLORS.get(record.severity_label, "white")
+            severity_colored = f"[{color}]{record.severity_label}[/{color}]"
+            
             # Truncate message
             msg = record.message[:80] + "..." if len(record.message) > 80 else record.message
             
-            table.add_row(ts_display, record.severity_label, msg)
+            table.add_row(ts_display, severity_colored, msg)
     
     def update_details(self):
         """Update details panel for selected row."""

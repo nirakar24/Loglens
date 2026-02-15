@@ -21,12 +21,13 @@ class BackendAdapter:
     - Error handling and diagnostics
     """
     
-    def __init__(self, max_buffer: int = 10000):
+    def __init__(self, max_buffer: Optional[int] = 10000):
         """
         Initialize adapter.
         
         Args:
-            max_buffer: Maximum records to hold in memory (ring buffer cap)
+            max_buffer: Maximum records to hold in memory (ring buffer cap).
+                        If None, no cap is applied (use with care).
         """
         self.max_buffer = max_buffer
     
@@ -62,8 +63,11 @@ class BackendAdapter:
         Raises:
             SourceError: On source failures
         """
-        # Apply buffer cap if no explicit limit
-        effective_limit = min(limit or self.max_buffer, self.max_buffer)
+        # Apply buffer cap if configured
+        if self.max_buffer is None:
+            effective_limit = limit
+        else:
+            effective_limit = min(limit or self.max_buffer, self.max_buffer)
         
         # Add follow flag to source kwargs if specified
         if follow:
