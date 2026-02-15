@@ -4,24 +4,35 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "loglens"
-version = "0.1.0"
-description = "Clean backend for Linux log processing with pluggable sources"
+version = "1.0.0"
+description = "Linux log viewer with interactive Terminal UI"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 authors = [
-    {name = "LogLens Contributors"}
+    {name = "Nirakar", email = "jenanirakar60@gmail.com"}
 ]
+license = {text = "MIT"}
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Topic :: System :: Logging",
+    "Topic :: System :: Monitoring",
 ]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/loglens"
+Repository = "https://github.com/yourusername/loglens"
+Issues = "https://github.com/yourusername/loglens/issues"
+
+[project.scripts]
+logtui = "logtui:main"
 
 [project.optional-dependencies]
 dev = [

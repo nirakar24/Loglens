@@ -115,7 +115,13 @@ for record in filter_logs(logs, keyword="timeout"):
 
 # Read from files
 logs = fetch_logs(source="file", path="/var/log/app.log", mode="text")
-for record in logs:
+for record in logs:## Contributing
+
+LogLens uses a clean, extensible architecture. Contributions welcome for:
+- New log sources (Docker, K8s, cloud providers)
+- Log format parsers (nginx, Apache, app-specific)
+- TUI enhancements
+- Documentation improvements
     print(record.message)
 
 # Combine fetch and filter
@@ -145,7 +151,7 @@ loglens/
 │   └── file.py        # File-based source
 └── tui/               # Terminal UI
     ├── app.py         # Main application
-    ├── app.css        # Dark theme styling
+    ├── app.css        # styling
     ├── state.py       # UI state management
     ├── backend.py     # Backend adapter layer
     └── screens/
@@ -155,7 +161,7 @@ logtui.py              # TUI entry point
 tests/                 # Comprehensive test suite
 ```
 
-## Design Principles
+## Design 
 
 1. **Strict Separation**: Backend engine has no UI dependencies
    - Use programmatically in any context (CLI, web service, scripts)
@@ -337,7 +343,7 @@ LogLens requires systemd. If you're on a non-systemd system:
 - Verify permissions: try `journalctl` directly in terminal
 - Check filters: ensure priority/units are correct
 
-### Search Input Not Visible (Known Issue)
+### Search Input Not Visible (Known Issue Working on it : )
 
 This is a rendering issue with certain terminal configurations. Workaround:
 - Type blindly in the search field (it still works)
@@ -371,23 +377,9 @@ This is a rendering issue with certain terminal configurations. Workaround:
 - [ ] nginx/Apache log parsers
 - [ ] Remote syslog support
 
-## Contributing
-
-LogLens uses a clean, extensible architecture. Contributions welcome for:
-- New log sources (Docker, K8s, cloud providers)
-- Log format parsers (nginx, Apache, app-specific)
-- TUI enhancements
-- Documentation improvements
-
 ## License
 
 [Add your license here]
-
-## Project Status
-
-✅ **Phase 1 Complete**: Backend engine with pluggable sources  
-✅ **Phase 2 Complete**: Interactive TUI with color coding and filtering  
-🚀 **Production Ready**: Full-featured log viewer with programmatic API
 
 **Want nginx logs?**
 ```python
@@ -442,7 +434,7 @@ python3 logtui.py --since=-1h --priority=3
 - ⌨️ **Keyboard Navigation**: Full keyboard control
 - 🌙 **Dark Theme**: Professional, easy-on-the-eyes interface
 
-📖 **Full documentation**: See [PHASE2_README.md](PHASE2_README.md)
+
 
 ### Requirements
 
@@ -451,18 +443,9 @@ python3 logtui.py --since=-1h --priority=3
 - `textual>=0.50.0` (for TUI, Phase 2 only)
 - Optional: `pytest` for running tests
 
-### License
-
-MIT
 
 ## Contributing
 
-This project is designed to be extensible. To add a new log source:
+Feel free to contribute !
 
-1. Implement `LogSource` interface in `loglens/sources/`
-2. Register it in `engine.py`
-3. Add normalizer logic in `normalize.py`
-4. Add tests
-
-See existing sources for examples.
 
