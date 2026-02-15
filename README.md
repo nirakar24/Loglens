@@ -371,24 +371,6 @@ This is a rendering issue with certain terminal configurations. Workaround:
 - [ ] nginx/Apache log parsers
 - [ ] Remote syslog support
 
-## Contributing
-
-LogLens uses a clean, extensible architecture. Contributions welcome for:
-- New log sources (Docker, K8s, cloud providers)
-- Log format parsers (nginx, Apache, app-specific)
-- TUI enhancements
-- Documentation improvements
-
-## License
-
-[Add your license here]
-
-## Project Status
-
-✅ **Phase 1 Complete**: Backend engine with pluggable sources  
-✅ **Phase 2 Complete**: Interactive TUI with color coding and filtering  
-🚀 **Production Ready**: Full-featured log viewer with programmatic API
-
 **Want nginx logs?**
 ```python
 # Add an nginx parser to FileSource or create NginxSource
@@ -416,9 +398,9 @@ pytest tests/test_filtering.py -v
 pytest tests/ --cov=loglens --cov-report=html
 ```
 
-## Phase 2: TUI Interface ✅
+## TUI Interface ✅
 
-LogLens now includes a Textual-based Terminal User Interface for interactive log viewing!
+LogLens includes a Textual-based Terminal User Interface for interactive log viewing!
 
 ### Quick Start
 
@@ -433,36 +415,4 @@ python3 logtui.py
 python3 logtui.py --since=-1h --priority=3
 ```
 
-### Features
-
-- 🎨 **3-Pane Layout**: Sidebar (categories) | Log Table | Details Panel
-- 🎯 **Smart Filtering**: Hybrid in-memory + backend reload
-- ⚡ **Follow Mode**: Real-time log streaming (journalctl)
-- 🔍 **Rich Details**: Toggle between curated and raw JSON view
-- ⌨️ **Keyboard Navigation**: Full keyboard control
-- 🌙 **Dark Theme**: Professional, easy-on-the-eyes interface
-
-📖 **Full documentation**: See [PHASE2_README.md](PHASE2_README.md)
-
-### Requirements
-
-- Python 3.8+
-- `systemd` (for journalctl source)
-- `textual>=0.50.0` (for TUI, Phase 2 only)
-- Optional: `pytest` for running tests
-
-### License
-
-MIT
-
-## Contributing
-
-This project is designed to be extensible. To add a new log source:
-
-1. Implement `LogSource` interface in `loglens/sources/`
-2. Register it in `engine.py`
-3. Add normalizer logic in `normalize.py`
-4. Add tests
-
-See existing sources for examples.
 
