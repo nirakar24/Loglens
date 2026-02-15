@@ -31,8 +31,11 @@ Examples:
   %(prog)s                           View journalctl logs
   %(prog)s --since=-1h               View logs from last hour
   %(prog)s --since=-30m --priority=3 View ERROR and above from last 30 min
-  %(prog)s --units=sshd.service      View logs from SSH service
+  %(prog)s --units=sshd.service      View logs from SSH service (systemd unit)
   %(prog)s --file=/var/log/syslog    View file-based logs
+  
+Note: To filter by non-unit sources like 'kernel', use the sidebar in the TUI 
+(left panel shows all categories). The --units flag only works with systemd units.
         """
     )
     
@@ -64,7 +67,7 @@ Examples:
         '--units',
         metavar='UNIT',
         nargs='+',
-        help='Filter by systemd units (e.g., sshd.service)'
+        help='Filter by systemd units (e.g., sshd.service, user@1000.service). Note: Use sidebar in TUI to filter by all categories including non-unit sources like "kernel"'
     )
     parser.add_argument(
         '--priority',
