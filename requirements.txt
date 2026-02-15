@@ -2,5 +2,8 @@
 pytest>=7.0.0
 pytest-cov>=4.0.0
 
-# No runtime dependencies for Phase 1 backend
-# (using only Python stdlib)
+# Phase 1 backend
+# No runtime dependencies (using only Python stdlib)
+
+# Phase 2 TUI
+textual>=0.50.0

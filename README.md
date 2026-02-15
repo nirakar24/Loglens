@@ -142,18 +142,39 @@ pytest tests/test_filtering.py -v
 pytest tests/ --cov=loglens --cov-report=html
 ```
 
-### Next Steps (Phase 2)
+## Phase 2: TUI Interface ✅
 
-- TUI interface using `textual` or `rich`
-- Log viewer with scrolling, search, live tail
-- Saved filter presets
-- Export to JSON/CSV
-- Advanced parsers for common log formats
+LogLens now includes a Textual-based Terminal User Interface for interactive log viewing!
+
+### Quick Start
+
+```bash
+# Install textual (required for Phase 2)
+pip install textual
+
+# Launch TUI
+python3 logtui.py
+
+# Or with filters
+python3 logtui.py --since=-1h --priority=3
+```
+
+### Features
+
+- 🎨 **3-Pane Layout**: Sidebar (categories) | Log Table | Details Panel
+- 🎯 **Smart Filtering**: Hybrid in-memory + backend reload
+- ⚡ **Follow Mode**: Real-time log streaming (journalctl)
+- 🔍 **Rich Details**: Toggle between curated and raw JSON view
+- ⌨️ **Keyboard Navigation**: Full keyboard control
+- 🌙 **Dark Theme**: Professional, easy-on-the-eyes interface
+
+📖 **Full documentation**: See [PHASE2_README.md](PHASE2_README.md)
 
 ### Requirements
 
 - Python 3.8+
 - `systemd` (for journalctl source)
+- `textual>=0.50.0` (for TUI, Phase 2 only)
 - Optional: `pytest` for running tests
 
 ### License
@@ -170,3 +191,4 @@ This project is designed to be extensible. To add a new log source:
 4. Add tests
 
 See existing sources for examples.
+
