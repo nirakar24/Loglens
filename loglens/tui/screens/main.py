@@ -70,7 +70,18 @@ class DetailsPanel(VerticalScroll):
         else:
             # Show curated view
             lines = []
-            lines.append(f"[bold]Timestamp:[/bold] {self.record.timestamp}")
+            
+            # Format timestamp to local time
+            ts_display = self.record.timestamp
+            if isinstance(ts_display, str):
+                try:
+                    dt = datetime.fromisoformat(ts_display.replace('Z', '+00:00'))
+                    dt_local = dt.astimezone()
+                    ts_display = dt_local.strftime("%Y-%m-%d %H:%M:%S %Z")
+                except:
+                    pass  # Use original string if parsing fails
+            
+            lines.append(f"[bold]Timestamp:[/bold] {ts_display}")
             lines.append(f"[bold]Severity:[/bold] {self.record.severity_label} ({self.record.severity_num})")
             lines.append(f"[bold]Message:[/bold]\n{self.record.message}")
             
@@ -206,12 +217,14 @@ class MainScreen(Screen):
         filtered_records = self.app_state.apply_filters()
         
         for record in filtered_records:
-            # Format timestamp
+            # Format timestamp - convert from UTC to local time
             ts = record.timestamp
             if isinstance(ts, str):
                 try:
                     dt = datetime.fromisoformat(ts.replace('Z', '+00:00'))
-                    ts_display = dt.strftime("%Y-%m-%d %H:%M:%S")
+                    # Convert to local timezone
+                    dt_local = dt.astimezone()
+                    ts_display = dt_local.strftime("%Y-%m-%d %H:%M:%S")
                 except:
                     ts_display = ts[:19] if len(ts) > 19 else ts
             else:
