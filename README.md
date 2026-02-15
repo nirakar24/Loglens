@@ -18,7 +18,6 @@ A powerful Linux log processing engine with an interactive Terminal UI for viewi
 </tr>
 </table>
 
-<div align="center">
 
 ## Features
 
