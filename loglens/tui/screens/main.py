@@ -38,7 +38,7 @@ class LogTable(DataTable):
 
 class CategorySidebar(ListView):
     """Sidebar showing systemd units/apps."""
-    pass
+    can_focus = True
 
 
 class DetailsPanel(VerticalScroll):
@@ -92,13 +92,30 @@ class DetailsPanel(VerticalScroll):
             self.mount(Static(content, classes="detail-curated"))
 
 
+class StatsBar(Static):
+    """Statistics bar showing log counts and status."""
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.total_logs = 0
+        self.follow_active = False
+    
+    def update_stats(self, total: int, follow: bool = False):
+        """Update the stats display."""
+        self.total_logs = total
+        self.follow_active = follow
+        
+        follow_indicator = "[green]●[/green] FOLLOW ON" if follow else "○ Follow Off"
+        self.update(f"📊 Total Logs: {total} | {follow_indicator}")
+
+
 class FilterBar(Container):
     """Filter controls bar."""
     
     def compose(self) -> ComposeResult:
         with Horizontal(classes="filter-bar"):
-            yield Input(placeholder="Search keyword...", id="search-input")
-            yield Input(placeholder="Min severity (e.g. WARNING)", id="severity-input")
+            yield Input(placeholder="🔍 Search keyword...", id="search-input")
+            yield Input(placeholder="⚠️  Min severity (e.g. WARNING)", id="severity-input")
             yield Button("Reload", id="reload-btn", variant="primary")
             yield Button("Follow", id="follow-btn")
             yield Button("Toggle Raw", id="toggle-raw-btn")
@@ -113,6 +130,8 @@ class MainScreen(Screen):
         Binding("ctrl+f", "toggle_follow", "Toggle Follow"),
         Binding("ctrl+t", "toggle_raw", "Toggle Raw/Curated"),
         Binding("ctrl+s", "focus_search", "Focus Search"),
+        Binding("tab", "focus_next", "Next", show=False),
+        Binding("shift+tab", "focus_previous", "Prev", show=False),
         Binding("up", "cursor_up", "Up", show=False),
         Binding("down", "cursor_down", "Down", show=False),
         Binding("left", "focus_sidebar", "Sidebar", show=False),
@@ -126,6 +145,7 @@ class MainScreen(Screen):
     def compose(self) -> ComposeResult:
         """Create child widgets."""
         yield Header()
+        yield StatsBar(id="stats-bar", classes="stats-bar")
         yield FilterBar()
         
         with Horizontal(id="main-container"):
@@ -152,7 +172,12 @@ class MainScreen(Screen):
         """Handle screen mount."""
         self.update_sidebar()
         self.update_table()
+        self.update_stats()
         self.update_status()
+        
+        # Set initial focus to table
+        table = self.query_one("#log-table", LogTable)
+        table.focus()
     
     def update_sidebar(self):
         """Update sidebar categories from app state."""
@@ -163,6 +188,14 @@ class MainScreen(Screen):
         
         for category in categories:
             sidebar.append(ListItem(Label(category)))
+    
+    def update_stats(self):
+        """Update stats bar."""
+        stats_bar = self.query_one("#stats-bar", StatsBar)
+        stats_bar.update_stats(
+            total=len(self.app_state.records),
+            follow=self.app_state.follow_mode
+        )
     
     def update_table(self):
         """Update log table from app state."""
@@ -235,6 +268,7 @@ class MainScreen(Screen):
                 
                 # Refresh table
                 self.update_table()
+                self.update_stats()
     
     def on_button_pressed(self, event: Button.Pressed) -> None:
         """Handle button clicks."""
@@ -273,7 +307,12 @@ class MainScreen(Screen):
         follow_btn.variant = "success" if self.app_state.follow_mode else "default"
         
         self.app_state.status_message = f"Follow mode: {'ON' if self.app_state.follow_mode else 'OFF'}"
+        self.update_stats()
         self.update_status()
+        
+        # If follow mode enabled, trigger immediate reload
+        if self.app_state.follow_mode:
+            self.action_reload()
     
     def action_toggle_raw(self) -> None:
         """Toggle raw/curated details view."""

@@ -5,6 +5,16 @@ Screen {
     background: $surface;
 }
 
+/* Stats bar */
+.stats-bar {
+    height: 1;
+    background: $boost;
+    color: $text;
+    text-align: center;
+    padding: 0 1;
+    text-style: bold;
+}
+
 /* Filter bar */
 .filter-bar {
     height: 3;
@@ -16,6 +26,11 @@ Screen {
 #search-input, #severity-input {
     width: 1fr;
     margin-right: 1;
+    border: tall $accent;
+}
+
+Input:focus {
+    border: tall $success;
 }
 
 Button {
