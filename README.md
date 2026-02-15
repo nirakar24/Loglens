@@ -2,6 +2,24 @@
 
 A powerful Linux log processing engine with an interactive Terminal UI for viewing and analyzing system logs. Think of it as a Linux equivalent to Windows Event Viewer.
 
+## Themes
+
+<table>
+
+
+
+<tr>
+<td align="center"><img src="https://github.com/user-attachments/assets/b649ac6e-a1c2-480b-9939-930a3d54f76f" width="400"/><br><b>Flexoki</b></td>
+<td align="center"><img src="https://github.com/user-attachments/assets/dd3a6032-7663-447b-9a5c-63868186a04d" width="400"/><br><b>Catpuccine</b></td>
+</tr>
+<tr>
+<td align="center"><img src="https://github.com/user-attachments/assets/0d577353-9177-46f0-af35-0d741848a284" width="400"/><br><b>Dracula</b></td>
+<td align="center"><img src="https://github.com/user-attachments/assets/a634cc03-1589-449d-8055-a4d24c852aac" width="400"/><br><b>Solarised Dark</b></td>
+</tr>
+</table>
+
+<div align="center">
+
 ## Features
 
 ### 🚀 Core Engine
