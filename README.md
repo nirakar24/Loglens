@@ -2,6 +2,24 @@
 
 A powerful Linux log processing engine with an interactive Terminal UI for viewing and analyzing system logs. Think of it as a Linux equivalent to Windows Event Viewer.
 
+## Themes
+
+<table>
+
+
+
+<tr>
+<td align="center"><img src="https://github.com/user-attachments/assets/b649ac6e-a1c2-480b-9939-930a3d54f76f" width="400"/><br><b>Flexoki</b></td>
+<td align="center"><img src="https://github.com/user-attachments/assets/dd3a6032-7663-447b-9a5c-63868186a04d" width="400"/><br><b>Catpuccine</b></td>
+</tr>
+<tr>
+<td align="center"><img src="https://github.com/user-attachments/assets/0d577353-9177-46f0-af35-0d741848a284" width="400"/><br><b>Dracula</b></td>
+<td align="center"><img src="https://github.com/user-attachments/assets/a634cc03-1589-449d-8055-a4d24c852aac" width="400"/><br><b>Solarised Dark</b></td>
+</tr>
+</table>
+
+<div align="center">
+
 ## Features
 
 ### 🚀 Core Engine
@@ -395,10 +413,13 @@ This is a rendering issue with certain terminal configurations. Workaround:
 - [ ] nginx/Apache log parsers
 - [ ] Remote syslog support
 
+<<<<<<< HEAD
 ## License
 
 MIT (see `LICENSE`).
 
+=======
+>>>>>>> be143e08a57b6a02d46c1a7c4ed87f03158728d8
 **Want nginx logs?**
 ```python
 # Add an nginx parser to FileSource or create NginxSource
@@ -426,9 +447,9 @@ pytest tests/test_filtering.py -v
 pytest tests/ --cov=loglens --cov-report=html
 ```
 
-## Phase 2: TUI Interface ✅
+## TUI Interface ✅
 
-LogLens now includes a Textual-based Terminal User Interface for interactive log viewing!
+LogLens includes a Textual-based Terminal User Interface for interactive log viewing!
 
 ### Quick Start
 
@@ -443,6 +464,7 @@ python3 logtui.py
 python3 logtui.py --since=-1h --priority=3
 ```
 
+<<<<<<< HEAD
 ### Features
 
 - 🎨 **3-Pane Layout**: Sidebar (categories) | Log Table | Details Panel
@@ -466,4 +488,6 @@ python3 logtui.py --since=-1h --priority=3
 
 Feel free to contribute !
 
+=======
+>>>>>>> be143e08a57b6a02d46c1a7c4ed87f03158728d8
 
