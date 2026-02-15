@@ -121,7 +121,6 @@ DataTable > .datatable--cursor {
 
 .detail-raw {
     color: $success;
-    text-style: noitalic;
 }
 
 /* Footer */
