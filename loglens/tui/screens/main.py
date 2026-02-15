@@ -20,6 +20,7 @@ import json
 from datetime import datetime
 from textual.app import ComposeResult
 from textual.screen import Screen
+from textual.message import Message
 from textual.containers import Container, Horizontal, Vertical, VerticalScroll
 from textual.widgets import (
     Header, Footer, DataTable, Static, Input, 
@@ -304,6 +305,6 @@ class MainScreen(Screen):
         table = self.query_one("#log-table", LogTable)
         table.focus()
     
-    class ReloadRequested(Screen.Message):
+    class ReloadRequested(Message):
         """Message to request reload from app."""
         pass
