@@ -27,10 +27,28 @@ Screen {
     width: 1fr;
     margin-right: 1;
     border: tall $accent;
+    background: $surface;
+    color: $text;
+}
+
+Input {
+    background: $surface;
+    color: $text;
 }
 
 Input:focus {
     border: tall $success;
+    background: $surface-lighten-1;
+    color: $text;
+}
+
+Input > .input--placeholder {
+    color: $text-muted;
+}
+
+Input > .input--cursor {
+    color: $text;
+    background: $primary;
 }
 
 Button {
