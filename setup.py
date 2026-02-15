@@ -8,7 +8,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="loglens",
-    version="1.0.0",
+    version="1.1.0",
     author="Nirakar",
     author_email="jenanirakar60@gmail.com",
     description="Linux log viewer with interactive Terminal UI",

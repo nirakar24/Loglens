@@ -45,6 +45,24 @@ A powerful Linux log processing engine with an interactive Terminal UI for viewi
 
 ### Install
 
+### Arch Linux (AUR)
+
+Once the package is published on AUR, you can install it with an AUR helper:
+
+```bash
+yay -S loglens
+# or
+paru -S loglens
+```
+
+Then launch:
+
+```bash
+logtui
+```
+
+If you see `No AUR package found for loglens`, the package isn’t published/indexed on AUR yet.
+
 ```bash
 # Install dependencies
 pip install -r requirements.txt
@@ -379,7 +397,7 @@ This is a rendering issue with certain terminal configurations. Workaround:
 
 ## License
 
-[Add your license here]
+MIT (see `LICENSE`).
 
 **Want nginx logs?**
 ```python
